@@ -44,7 +44,8 @@ with col1:
     empresa = st.text_input("Empresa / Actividad económica")       # Dónde trabaja el cliente
 
 with col2:
-    ocupacion = st.text_input("Ocupación actual")                  # Cargo que desempeña
+    ocupacion = st.text_input("Ocupación actual")
+    sueldo = st.number_input("Sueldo mensual ($)", min_value=0.0, step=100000.0, format="%.0f")  # Salario base del cargo                  # Cargo que desempeña
     # Lista desplegable para elegir el tipo de contrato
     # Cada opción ya incluye el porcentaje máximo de endeudamiento permitido
     tipo_contrato = st.selectbox("Tipo de contrato", [
@@ -66,7 +67,8 @@ with col1:
     ingresos = st.number_input("Ingresos mensuales ($)", min_value=0.0, step=100000.0, format="%.0f")
     gastos_basicos = st.number_input("Gastos básicos mensuales ($)", min_value=0.0, step=50000.0, format="%.0f")
     otros_gastos = st.number_input("Otros gastos mensuales ($)", min_value=0.0, step=50000.0, format="%.0f")
-
+    total_gastos_visible = gastos_basicos + otros_gastos  # Se calcula en tiempo real
+    st.info(f"📊 Total de gastos mensuales: **${total_gastos_visible:,.0f}**")  # Se muestra al usuario mientras llena el form
 with col2:
     valor_prestamo = st.number_input("Valor del préstamo solicitado ($)", min_value=0.0, step=500000.0, format="%.0f")
     plazo = st.number_input("Plazo (meses)", min_value=1, max_value=360, value=12)  # Cuántos meses para pagar
@@ -78,7 +80,20 @@ with col2:
 
 st.divider()
 
-
+with st.expander("🧪 Ver casos de prueba sugeridos"):
+    st.markdown("""
+| | Caso A — Viable | Caso B — Ajuste | Caso C — No viable |
+|---|---|---|---|
+| Ingresos | $4.000.000 | $3.000.000 | $1.500.000 |
+| Gastos básicos | $800.000 | $900.000 | $1.200.000 |
+| Otros gastos | $400.000 | $500.000 | $400.000 |
+| Préstamo | $5.000.000 | $8.000.000 | $6.000.000 |
+| Plazo | 24 meses | 24 meses | 12 meses |
+| Tasa | 15% | 15% | 15% |
+| Contrato | Indefinido | Fijo | Independiente |
+| **Resultado esperado** | **Aprobado** | **Aprobado parcialmente** | **No aprobado** |
+""")
+    
 # ─── BOTÓN PRINCIPAL ───
 # Cuando el usuario haga clic en este botón, se ejecuta todo el análisis
 if st.button("📊 Analizar solicitud", use_container_width=True, type="primary"):
