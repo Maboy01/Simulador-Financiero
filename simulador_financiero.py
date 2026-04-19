@@ -5,7 +5,7 @@ import streamlit as st
 st.set_page_config(page_title="Simulador Financiero", page_icon="🏦", layout="centered")
 
 # Mostramos el título principal de la página
-st.title("🏦 Simulador Financiero de Préstamos")
+st.title("Simulador Financiero de Préstamos")
 
 # Mostramos un texto secundario en cursiva debajo del título
 st.markdown("*Universidad de Cundinamarca — Análisis de Riesgo Crediticio*")
@@ -16,7 +16,7 @@ st.divider()
 
 # ─── SECCIÓN 1: DATOS PERSONALES ───
 # Mostramos el subtítulo de esta sección
-st.subheader("📋 Datos Personales")
+st.subheader(" Datos Personales")
 
 # Dividimos la pantalla en dos columnas para que los campos queden lado a lado
 col1, col2 = st.columns(2)
@@ -35,7 +35,7 @@ st.divider()  # Línea separadora
 
 
 # ─── SECCIÓN 2: DATOS LABORALES ───
-st.subheader("💼 Datos Laborales")
+st.subheader("Datos Laborales")
 
 col1, col2 = st.columns(2)  # Volvemos a dividir en dos columnas
 
@@ -58,7 +58,7 @@ st.divider()
 
 
 # ─── SECCIÓN 3: DATOS FINANCIEROS ───
-st.subheader("💰 Datos Financieros")
+st.subheader("Datos Financieros")
 
 col1, col2 = st.columns(2)
 
@@ -80,7 +80,7 @@ with col2:
 
 st.divider()
 
-with st.expander("🧪 Ver casos de prueba sugeridos"):
+with st.expander("Ver casos de prueba sugeridos"):
     st.markdown("""
 | | Caso A — Viable | Caso B — Ajuste | Caso C — No viable |
 |---|---|---|---|
@@ -96,7 +96,7 @@ with st.expander("🧪 Ver casos de prueba sugeridos"):
     
 # ─── BOTÓN PRINCIPAL ───
 # Cuando el usuario haga clic en este botón, se ejecuta todo el análisis
-if st.button("📊 Analizar solicitud", use_container_width=True, type="primary"):
+if st.button("Analizar solicitud", use_container_width=True, type="primary"):
 
     # ── VALIDACIONES ──
     # Antes de calcular, verificamos que los datos ingresados tengan sentido
@@ -161,36 +161,36 @@ if st.button("📊 Analizar solicitud", use_container_width=True, type="primary"
             decision = "NO APROBADO"
             razon = "El ingreso disponible es negativo o cero. El cliente no puede cubrir sus gastos básicos."
             color = "red"
-            icono = "❌"
+            
 
         elif cuota_mensual <= capacidad_maxima and ingreso_disponible > 0:
             # La cuota cabe dentro del límite permitido y le queda dinero disponible
             decision = "APROBADO"
             razon = "La cuota mensual está dentro de la capacidad de endeudamiento y el ingreso disponible es positivo."
             color = "green"
-            icono = "✅"
+            
 
         else:
             # Tiene capacidad de pago, pero no alcanza para el monto completo solicitado
             decision = "APROBADO PARCIALMENTE"
             razon = "El cliente tiene capacidad de pago, pero la cuota supera el límite permitido. Se sugiere un monto menor."
             color = "orange"
-            icono = "⚠️"
+            
 
         # ── NIVEL DE RIESGO ──
         # Calculamos qué porcentaje del ingreso se va en gastos
         relacion_gastos = total_gastos / ingresos if ingresos > 0 else 1
 
         if relacion_gastos < 0.4:
-            nivel_riesgo = "🟢 BAJO"    # Menos del 40% del ingreso en gastos = poco riesgo
+            nivel_riesgo = "BAJO"    # Menos del 40% del ingreso en gastos = poco riesgo
         elif relacion_gastos < 0.7:
-            nivel_riesgo = "🟡 MEDIO"   # Entre 40% y 70% = riesgo moderado
+            nivel_riesgo = "MEDIO"   # Entre 40% y 70% = riesgo moderado
         else:
-            nivel_riesgo = "🔴 ALTO"    # Más del 70% en gastos = riesgo elevado
+            nivel_riesgo = "ALTO"    # Más del 70% en gastos = riesgo elevado
 
 
         # ── MOSTRAR INDICADORES EN PANTALLA ──
-        st.subheader("📈 Indicadores Financieros")
+        st.subheader("Indicadores Financieros")
 
         # Primera fila de métricas
         c1, c2, c3 = st.columns(3)
@@ -207,15 +207,15 @@ if st.button("📊 Analizar solicitud", use_container_width=True, type="primary"
         st.divider()
 
         # ── MOSTRAR RESULTADO FINAL ──
-        st.subheader("🏁 Resultado de la Solicitud")
+        st.subheader("Resultado de la Solicitud")
 
         # Mostramos el resultado con el color correspondiente
         if color == "green":
-            st.success(f"{icono} **{decision}**")   # Cuadro verde
+            st.success(f" **{decision}**")   # Cuadro verde
         elif color == "orange":
-            st.warning(f"{icono} **{decision}**")   # Cuadro amarillo
+            st.warning(f" **{decision}**")   # Cuadro amarillo
         else:
-            st.error(f"{icono} **{decision}**")     # Cuadro rojo
+            st.error(f" **{decision}**")     # Cuadro rojo
 
         # Explicamos por qué se tomó esa decisión
         st.markdown(f"**Justificación:** {razon}")
@@ -224,18 +224,18 @@ if st.button("📊 Analizar solicitud", use_container_width=True, type="primary"
 
         # Si fue aprobado parcialmente, mostramos el monto alternativo sugerido
         if decision == "APROBADO PARCIALMENTE":
-            st.info(f"💡 **Monto máximo recomendable:** ${monto_maximo:,.0f}  \n"
+            st.info(f"**Monto máximo recomendable:** ${monto_maximo:,.0f}  \n"
                     f"Este es el máximo que el cliente podría asumir sin superar su capacidad de pago.")
 
         # Advertencia especial para clientes mayores de 70 años
         if edad > 70:
-            st.warning("⚠️ El cliente tiene más de 70 años. Este caso requiere revisión especial.")
+            st.warning("El cliente tiene más de 70 años. Este caso requiere revisión especial.")
 
         st.divider()
 
         # ── RESUMEN DEL CLIENTE ──
         # Bloque que se puede expandir o colapsar con un clic
-        with st.expander("👤 Ver resumen del perfil del cliente"):
+        with st.expander("Ver resumen del perfil del cliente"):
             # Mostramos todos los datos en formato de tabla
             st.markdown(f"""
 | Campo | Valor |
