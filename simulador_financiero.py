@@ -38,9 +38,9 @@ st.divider()
 st.subheader("💰 Datos Financieros")
 col1, col2 = st.columns(2)
 with col1:
-    ingresos = st.number_input("Ingresos mensuales ($)", min_value=0.0, step=100000.0, format="%,.0f")
-    gastos_basicos = st.number_input("Gastos básicos mensuales ($)", min_value=0.0, step=50000.0)
-    otros_gastos = st.number_input("Otros gastos mensuales ($)", min_value=0.0, step=50000.0)
+    ingresos = st.number_input("Ingresos mensuales ($)", min_value=0.0, step=100000.0, format="%.0f")
+    gastos_basicos = st.number_input("Gastos básicos mensuales ($)", min_value=0.0, step=50000.0, format="%.0f")
+    otros_gastos = st.number_input("Otros gastos mensuales ($)", min_value=0.0, step=50000.0, format="%.0f")
 with col2:
     valor_prestamo = st.number_input("Valor del préstamo solicitado ($)", min_value=0.0, step=500000.0)
     plazo = st.number_input("Plazo (meses)", min_value=1, max_value=360, value=12)
